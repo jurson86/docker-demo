@@ -1,0 +1,59 @@
+version: '2'
+# define network
+networks:
+  app_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.19.0.0/24
+
+# define service
+services:
+  redis00:
+    build:
+      context: .
+      args:
+        redis_version: '4.0.10'
+    image: 10.103.1.241:5000/redis:00.1
+    container_name: my_redis_00
+    restart: always
+    hostname: redis00
+    ports:
+      - '6000:6379'
+      - '26000:26379'
+    networks:
+      app_net:
+        ipv4_address: 172.19.0.10
+  redis01:
+    build:
+      context: .
+      args:
+        redis_version: '4.0.10'
+    image: 10.103.1.241:5000/redis:01.1
+    container_name: my_redis_01
+    restart: always
+    hostname: redis01
+    ports:
+      - '6001:6379'
+      - '26001:26379'
+    networks:
+      app_net:
+        ipv4_address: 172.19.0.11
+  redis02:
+    build:
+      context: .
+      args:
+        redis_version: '4.0.10'
+    image: 10.103.1.241:5000/redis:02.1
+    container_name: my_redis_02
+    restart: always
+    hostname: redis02
+    ports:
+      - '6002:6379'
+      - '26002:26379'
+    networks:
+      app_net:
+        ipv4_address: 172.19.0.12
+
+
